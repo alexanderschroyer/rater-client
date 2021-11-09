@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from 'react-router-dom'
-import { createGame, getGames } from './GameManager.js'
+import { createGame, getGames, getCategories } from './GameManager.js'
 
 
 export const GameForm = () => {
     const history = useHistory()
+    const [categories, setCategories] = useState([])
 
     /*
         Since the input fields are bound to the values of
@@ -21,6 +22,11 @@ export const GameForm = () => {
         ageRecommendation: 0,
         createdOn: ""
     })
+
+    useEffect(() => {
+        getCategories()
+        .then(data => setCategories(data))
+    }, [])
 
     /*
         REFACTOR CHALLENGE START
@@ -50,6 +56,17 @@ export const GameForm = () => {
                         value={currentGame.title}
                         onChange={changeGameState}
                     />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="categoryId">Category: </label>
+                    <select name="categoryId"
+                        onChange={changeGameState}>
+                    {
+                        categories.map(cat => <option value={cat.id}>{cat.label}</option>)
+                    }
+                    </select>
                 </div>
             </fieldset>
             <fieldset>
@@ -122,7 +139,7 @@ export const GameForm = () => {
                         numberOfPlayers: parseInt(currentGame.numberOfPlayers),
                         estimatedTimeToPlay: currentGame.estimatedTimeToPlay,
                         ageRecommendation: parseInt(currentGame.ageRecommendation),
-                        createdOn: Date.now().toString()
+                        createdOn: Date.now().toLocaleString()
                     }
 
                     // Send POST request to your API
