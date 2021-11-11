@@ -3,22 +3,13 @@ import { useHistory, useParams } from "react-router-dom";
 import { getCurrentUser } from "../APIManager";
 import { createReview, getReviews, getGames } from "./GameManager";
 
-var currentDate = new Date(Date.now() + (8 * 86400000))
-var newDateOptions = {
-        day: "2-digit",
-        year: "numeric",
-        month: "2-digit"
-}
-var newDate = currentDate.toLocaleString("en-US", newDateOptions );
-
 export const ReviewForm = () => {
     const [game, setGame] = useState([])
     const history = useHistory()
     const currentUser = getCurrentUser()
     const [currentReview, setCurrentReview] = useState({
         gameId: 0,
-        content: "",
-        createdOn: ""
+        content: ""
     })
 
     useEffect(() => {
@@ -64,12 +55,11 @@ export const ReviewForm = () => {
                     const review = {
                         gameId: parseInt(gameId),
                         content: currentReview.content,
-                        createdOn: newDate
                     }
 
                     // Send POST request to your API
                     createReview(review)
-                        .then(() => history.push(`/game/${gameId}/review`))
+                        .then(() => history.push(`/game/${gameId}`))
                 }}
                 className="btn btn-primary">Post</button>
             </form>

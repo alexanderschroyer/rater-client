@@ -24,6 +24,7 @@ export const GameList = (props) => {
                 games.map((game) => {
                     return <section key={`game--${game.id}`} className="game">
                         <Link to={`/game/${game.id}`} className="game__title">{game.title}</Link> by {game.designer}
+                        <div className="game__category">Category: {game.category?.label}</div>
                         <div className="game__players">{game.number_of_players} players needed</div>
                         <div className="game__description">Description: {game.description}</div>
                         <div className="game__yearReleased">Year Released: {game.year_released}</div>

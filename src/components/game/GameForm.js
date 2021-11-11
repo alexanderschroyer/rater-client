@@ -14,6 +14,7 @@ export const GameForm = () => {
     */
     const [currentGame, setCurrentGame] = useState({
         title: "",
+        category: 0,
         description: "",
         designer: "",
         yearReleased: 0,
@@ -62,6 +63,7 @@ export const GameForm = () => {
                 <div className="form-group">
                     <label htmlFor="categoryId">Category: </label>
                     <select name="categoryId"
+                        value={currentGame.category}
                         onChange={changeGameState}>
                     {
                         categories.map(cat => <option value={cat.id}>{cat.label}</option>)
@@ -133,6 +135,7 @@ export const GameForm = () => {
 
                     const game = {
                         title: currentGame.title,
+                        category: currentGame.category,
                         description: currentGame.description,
                         designer: currentGame.designer,
                         yearReleased: parseInt(currentGame.yearReleased),
